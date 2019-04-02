@@ -1,1 +1,1 @@
-write-host "Hello World" -ForegroundColor DarkRed -BackgroundColor Yellow
+write-host "Hello World" -ForegroundColor DarkRed -BackgroundColor White
