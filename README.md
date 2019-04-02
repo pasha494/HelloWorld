@@ -1,2 +1,1 @@
-# HelloWorld
-Sample Helloworld program using powershell
+write-host "Hello World" -ForegroundColor DarkRed -BackgroundColor Yellow
