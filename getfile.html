@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download File</title>
+</head>
+<body>
+    <button id="downloadBtn">Download File</button>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            debugger
+            // URL of the file to download
+            const url = 'https://kal01-sdx.intergraphsmartcloud.com/SPFViewDir/20240717T054305870Z/e9138b2e-7387-43b8-9e2f-e54717e037bf/004010A0012000148.dgn';
+
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Configure it: GET-request for the URL
+            xhr.open('GET', url, true);
+
+            // Set custom headers if needed
+            //xhr.setRequestHeader('Authorization', 'Bearer your-token');
+            //xhr.setRequestHeader('Custom-Header', 'CustomValue');
+
+            // Set the response type to 'blob' to handle binary data
+            xhr.responseType = 'blob';
+
+            // Define what happens on successful data submission
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Create a new Blob object using the response data of the onload object
+                    const blob = new Blob([xhr.response], { type: xhr.getResponseHeader('Content-Type') });
+
+                    // Use FileReader to convert the Blob into a data URL
+                    const reader = new FileReader();
+                    reader.onload = function () {
+                        const link = document.createElement('a');
+                        link.href = reader.result;
+                        link.download = 'downloaded-file.ext';
+                        link.click();
+                    };
+                    reader.readAsDataURL(blob);
+                } else {
+                    console.error('Download failed:', xhr.status, xhr.statusText);
+                }
+            };
+
+            // Define what happens in case of an error
+            xhr.onerror = function () {
+                console.error('Request failed:', xhr.status, xhr.statusText);
+            };
+
+            // Handle other potential errors
+            xhr.ontimeout = function () {
+                console.error('Request timed out:', xhr.status, xhr.statusText);
+            };
+
+            xhr.onabort = function () {
+                console.error('Request was aborted:', xhr.status, xhr.statusText);
+            };
+
+            // Send the request
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
